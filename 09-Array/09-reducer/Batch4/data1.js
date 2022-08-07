@@ -677,6 +677,7 @@ let transaction =sales.reduce( (acc,item) => item ? acc+1 : acc+0,0);
 let total = sales.reduce( (acc,item) =>{
     
     let empty = {};
+    let empty2 = {};
     if(!acc.Name.includes(item.customer)){
       acc.Name.push(item.customer);
       acc.count += 1
@@ -685,22 +686,30 @@ let total = sales.reduce( (acc,item) =>{
     if (!acc.datail[item.customer]){
       //  console.log("work if");
        empty[item.customer] = item.product.unitPrice;
+       
       //  console.log(item.product.unitPrice)
       //  console.log(empty);
        
     }else if (acc.datail[item.customer] ){
         acc.datail[item.customer] += item.product.unitPrice; 
+        
         // console.log(acc.datail)
     }
 
     Object.assign(acc.datail,empty)
 
+    if (!acc.unit[item.customer]){
+       empty2[item.customer] = 1;
+       
+    }else{
+      acc.unit[item.customer] += 1; 
+    }
    
-
+    Object.assign(acc.unit,empty2)
 
     console.log(acc)
     return acc;
-  },{ Name : [],count :0 , datail : { }}) ;    // datail : { A : 380,..}
+  },{ Name : [],count :0 , datail : { } , unit : { }}) ;    // datail : { A : 380,..}
 
 
 sales.reduce( (acc,item) => {
